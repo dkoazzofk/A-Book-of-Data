@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #define MAX_LENGHT 30
 
 typedef struct Person{
@@ -28,13 +29,39 @@ void enterStruct(person *user){
     printf("----------------------------------\n");
 }
 
+void delete(person *user){
+    memset(user, 0, sizeof(person));
+    printf("User data cleared\n");
+}
+
 
 int main(){
-    struct Person people[3];
-    for(int i = 0; i < 3; i++){
+    int choose, expression;
+    struct Person people[2];
+    for(int i = 0; i < 2; i++){
         enterStruct(&people[i]);
         printf("Name: %s\nSurname: %s\nMiddlename: %s\nEmail: %s\nSaved\n", people[i].name, people[i].surname, people[i].middleName, people[i].email);
-        //printf("Saved: ");
     }
+    printf("Do you want to cleare user data?\n 1 - Yes\n 2 - No\n");
+    scanf("%d",&choose);
+    switch (choose)
+    {
+    case 1:
+        printf("Choose who u want to delete in massive\n 1 - First data\n 2 - Second data\n");
+        scanf("%d",&expression);
+        switch (expression)
+        {
+        case 1:
+            delete(&people[0]);
+            break;
+        case 2:
+            delete(&people[1]);
+            break;
+        }
+        break;
+    case 2:
+        break;
+    }
+    printf(people[0].name);
     return 0;
 }
