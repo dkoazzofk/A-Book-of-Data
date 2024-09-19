@@ -35,9 +35,15 @@ void delete(person *user){
     printf("User data cleared\n");
 }
 
+void mainMenu(){
+    printf("-----Main Menu-----\n");
+    printf("What do you want to do?\n  1 - Fill data\n  2 - Clear data\n  3 - Change data\n");
+}
+
 
 int main(){
-    int choose, udl, dataCount;
+    int choose, del, dataCount, mainMenuChoose;
+    mainMenu();
     printf("How much data do you want to fill in?\n   Enter a number: ");
     scanf("%d", &dataCount);
     struct Person people[dataCount];
@@ -53,9 +59,9 @@ int main(){
     {
     case 1:
         printf("Who do you want to delete?\n");
-        scanf("%d", &udl);
-        delete(&people[udl]);
-        printf("\n--->",people[udl].name);
+        scanf("%d", &del);
+        delete(&people[del]);
+        printf("\n--->",people[del].name);
         break;
     case 2:
         printf("Exit...");
