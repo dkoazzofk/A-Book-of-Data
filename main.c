@@ -40,13 +40,6 @@ void addPerson(person *user){
     printf("----------------------------------\n");
 }
 
-// void fillStruct(person people[], int dataCount){
-//     for(int i = 0; i < dataCount; i++){
-//     //enterStruct(&people[i]);
-//     printf("Name: %s\nSurname: %s\nMiddlename: %s\nEmail: %s\nSaved\n", people[i].name, people[i].surname, people[i].email);
-//     }
-// }
-
 void delete(person people[]){
     int del;
     printf("Who do you want to delete?\n");
@@ -110,15 +103,6 @@ void listPerson(person people[]){
     }
 
 }
-
-// void changeData(person people[]){
-//     int datachange;
-//     person people;
-//     scanf("%d",datachange);
-//     scanf("%s",people[datachange].name);
-//     scanf("%s",people[datachange].surname);
-//     scanf("%s",people[datachange].email); 
-// }
 
 int main(){
     int expression;
