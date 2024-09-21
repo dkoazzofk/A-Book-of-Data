@@ -1,75 +1,155 @@
 #include <stdio.h>
 #include <string.h>
-#define MAX_LENGHT_FOR_STRUCT 128
+#define MAX_LENGHT_STRUCT 2
 #define MAX_LENGHT 30
 
 typedef struct Person{
-    char id;
+    int id;
     char name[MAX_LENGHT];
     char surname[MAX_LENGHT];
-    char middleName[MAX_LENGHT];
+    char phone[MAX_LENGHT];
     char email[MAX_LENGHT];
+    char socialnetwork[MAX_LENGHT];
 }person;
 
-typedef struct SocialNetwork{
-    char vk[MAX_LENGHT];
-    char ok[MAX_LENGHT];
-    char telegram[MAX_LENGHT];
-}SN;
 
-void enterStruct(person *user){
+void addPerson(person *user){
+    int userCount = 0;
     printf("----------------------------------\n");
+
     printf("Enter your name: ");
     scanf("%s", user->name);
     printf("Enter your surname: ");
     scanf("%s", user->surname);
-    printf("Enter your middlename: ");
-    scanf("%s", user->middleName);
+
+    printf("Enter your phone: ");
+    getchar();
+    fgets(user[userCount].phone, MAX_LENGHT, stdin);
+
     printf("Enter your email: ");
-    scanf("%s", user->email);
+    getchar();
+    fgets(user[userCount].email,MAX_LENGHT,stdin);
+
+    printf("Enter your socialnetwork: ");
+    getchar();
+    fgets(user[userCount].socialnetwork,MAX_LENGHT,stdin);
+
+    userCount++;
+    printf("User was added.\n");
+
     printf("----------------------------------\n");
 }
 
-void delete(person *user){
-    memset(user, 0, sizeof(person));
+// void fillStruct(person people[], int dataCount){
+//     for(int i = 0; i < dataCount; i++){
+//     //enterStruct(&people[i]);
+//     printf("Name: %s\nSurname: %s\nMiddlename: %s\nEmail: %s\nSaved\n", people[i].name, people[i].surname, people[i].email);
+//     }
+// }
+
+void delete(person people[]){
+    int del;
+    printf("Who do you want to delete?\n");
+    scanf("%d", &del);
+    memset(&people[del], 0, sizeof(person));
     printf("User data cleared\n");
+    printf("\n--->", people[del].name);
 }
 
-void mainMenu(){
-    printf("-----Main Menu-----\n");
-    printf("What do you want to do?\n  1 - Fill data\n  2 - Clear data\n  3 - Change data\n");
+void editPerson(person people[]){
+    char lastName[MAX_LENGHT];
+    printf("Put surname: ");
+    scanf("%s", lastName);
+    getchar();
+        for(int i = 0; i < MAX_LENGHT; i++){
+        if(strcmp(people[i].surname, lastName) == 0){
+            printf("Editing person: %s %s \n", people[i].name, people[i].surname);
+            printf("Enter new phone(if needed): \n");
+            getchar();
+            char input[MAX_LENGHT];
+            fgets(input, MAX_LENGHT, stdin);
+            if(input[0] != '\n'){
+                strncpy(people[i].phone, input, MAX_LENGHT);
+                people[i].phone[strcspn(people[i].phone, "\n")] = '\0';
+            }
+            
+            printf("Enter new email(if needed): \n");
+            fgets(input, MAX_LENGHT, stdin);
+            if (input[0] != '\n') {
+                strncpy(people[i].email, input, MAX_LENGHT);
+                people[i].email[strcspn(people[i].email, "\n")] = '\0';
+            }
+            
+            printf("Enter new socialnetwork(if needed): \n");
+            fgets(input, MAX_LENGHT, stdin);
+            if(input[0] != '\n'){
+                strncpy(people[i].socialnetwork, input, MAX_LENGHT);
+                people[i].socialnetwork[strcspn(people[i].socialnetwork, "\n")] = '\0';
+            }
+            
+            printf("Person updated.\n ");
+        }
+    }
 }
 
+void trashDestroyer(person people[]){
+    memset(people, 0, sizeof(person) * MAX_LENGHT);
+    for(int i = 0; i < MAX_LENGHT; i++){
+        people[i].name[0] = '\0';
+        people[i].name[0] = '\0';
+        people[i].surname[0] = '\0';
+        people[i].phone[0] = '\0';
+        people[i].socialnetwork[0] = '\0';
+        people[i].email[0] = '\0';
+    }
+}
+
+void listPerson(person people[]){
+    for(int i = 0; i < MAX_LENGHT;i++){
+        printf("Name: %s Surname: %s\n", people[i].name, people[i].surname);
+    }
+
+}
+
+// void changeData(person people[]){
+//     int datachange;
+//     person people;
+//     scanf("%d",datachange);
+//     scanf("%s",people[datachange].name);
+//     scanf("%s",people[datachange].surname);
+//     scanf("%s",people[datachange].email); 
+// }
 
 int main(){
-    int choose, del, dataCount, mainMenuChoose;
-    mainMenu();
-    printf("How much data do you want to fill in?\n   Enter a number: ");
-    scanf("%d", &dataCount);
-    struct Person people[dataCount];
-
-    for(int i = 0; i < dataCount; i++){
-        enterStruct(&people[i]);
-        printf("Name: %s\nSurname: %s\nMiddlename: %s\nEmail: %s\nSaved\n", people[i].name, people[i].surname, people[i].middleName, people[i].email);
-    }
-    
-    printf("Do you want to cleare user data?\n 1 - Yes\n 2 - No\n");
-    scanf("%d",&choose);
-    switch (choose)
+    int expression;
+    person people[MAX_LENGHT];
+    trashDestroyer(people);
+    do
     {
-    case 1:
-        printf("Who do you want to delete?\n");
-        scanf("%d", &del);
-        delete(&people[del]);
-        printf("\n--->",people[del].name);
-        break;
-    case 2:
-        printf("Exit...");
-        return 0;
-        break;
-    
-    default:
-        break;
-    }
+        printf("-----Main Menu-----\n");
+        printf("1. Add Person.\n");
+        printf("2. Delete Person.\n");
+        printf("3. Edit Person.\n");
+        printf("4. List Person.\n");
+        printf("5. Exit.\n");
+        printf("Choose an option.\n");
+        scanf("%d",&expression);
+        switch (expression)
+        {
+        case 1:
+            addPerson(people);
+            break;
+        case 2:
+            break;
+        case 3:
+            editPerson(people);
+            break;
+        case 4:
+            listPerson(people);
+            break;
+        case 5:
+            return 0;
+        }
+    } while (expression != 5);
     return 0;
 }
